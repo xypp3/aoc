@@ -30,7 +30,7 @@ let split_in_middle str : int =
         let f, s = split lines in
         let f_sort = List.sort Int.compare f in
         let s_sort = List.sort Int.compare s in
-        List.fold_left (+) 0 (List.map2 (-) s_sort f_sort);;
+        List.fold_left (+) 0 (List.map2 (fun a b -> Int.abs (a-b)) s_sort f_sort);;
 
 
 let () = let x, s = (first_n_last "123    456") in
@@ -45,3 +45,20 @@ let read_file_to_strings filename =
   (List.fold_left (fun init x -> init ^ "\n" ^ x) (List.hd strings) (List.tl strings))
 
 let () = Printf.printf "Ans:%d\n" (split_in_middle (read_file_to_strings "part1.txt"));;
+
+let multiply_left_by_count_right str : int = 
+        let lines = split_on_char '\n' str in
+        let rec split l = 
+                match l with
+                | [] -> [], []
+                | x :: xs -> 
+                        let f,s = first_n_last x in
+                        let r_firs, r_sec = split xs in
+                        (r_firs @ [f], r_sec @ [s])
+        in
+        let f, s = split lines in
+        List.fold_left (+) 0 (List.map (fun a -> a * (List.length (List.filter (fun b -> Int.equal a b) s))) f);;
+
+let () = Printf.printf "Ans:pt2-test:%d\n" (multiply_left_by_count_right test_pt1);;
+let () = Printf.printf "Ans:pt2:%d\n" (multiply_left_by_count_right (read_file_to_strings "part1.txt"));;
+
