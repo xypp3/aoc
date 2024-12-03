@@ -1,0 +1,59 @@
+# dune exec day_01 -w
+# OCAMLPARAM: unset
+# Shared cache: enabled-except-user-rules
+# Shared cache location: /home/xypp3/.cache/dune/db
+# Workspace root: /home/xypp3/pkm/advent-of-code/2024/day_01
+# Auto-detected concurrency: 16
+# Dune context:
+#  { name = "default"
+#  ; kind = "default"
+#  ; profile = Dev
+#  ; merlin = true
+#  ; fdo_target_exe = None
+#  ; build_dir = In_build_dir "default"
+#  ; instrument_with = []
+#  }
+$ /home/xypp3/.opam/default/bin/ocamlc.opt -config > /tmp/dune_df98eb_output
+$ (cd _build/default && /home/xypp3/.opam/default/bin/ocamlopt.opt -w @1..3@5..28@31..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -I bin/.main.eobjs/byte -I bin/.main.eobjs/native -I lib/.day_01.objs/byte -I lib/.day_01.objs/native -intf-suffix .ml -no-alias-deps -opaque -o bin/.main.eobjs/native/dune__exe__Main.cmx -c -impl bin/main.ml)
+$ (cd _build/default && /home/xypp3/.opam/default/bin/ocamlopt.opt -w @1..3@5..28@31..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -o bin/main.exe lib/day_01.cmxa bin/.main.eobjs/native/dune__exe__Main.cmx)
+$ (cd _build/default && /home/xypp3/.opam/default/bin/ocamlopt.opt -w @1..3@5..28@31..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -I bin/.main.eobjs/byte -I bin/.main.eobjs/native -I lib/.day_01.objs/byte -I lib/.day_01.objs/native -intf-suffix .ml -no-alias-deps -opaque -o bin/.main.eobjs/native/dune__exe__Main.cmx -c -impl bin/main.ml)
+> File "bin/main.ml", line 48, characters 59-60:
+> 48 | let () = print_endline (read_file_to_strings "./part1.txt"))
+>                                                                 ^
+> Error: Syntax error
+[2]
+$ (cd _build/default && /home/xypp3/.opam/default/bin/ocamlopt.opt -w @1..3@5..28@31..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -I bin/.main.eobjs/byte -I bin/.main.eobjs/native -I lib/.day_01.objs/byte -I lib/.day_01.objs/native -intf-suffix .ml -no-alias-deps -opaque -o bin/.main.eobjs/native/dune__exe__Main.cmx -c -impl bin/main.ml)
+> File "bin/main.ml", line 47, characters 59-60:
+> 47 | let () = print_endline (read_file_to_strings "./part1.txt"))
+>                                                                 ^
+> Error: Syntax error
+[2]
+$ (cd _build/default && /home/xypp3/.opam/default/bin/ocamlopt.opt -w @1..3@5..28@31..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -I bin/.main.eobjs/byte -I bin/.main.eobjs/native -I lib/.day_01.objs/byte -I lib/.day_01.objs/native -intf-suffix .ml -no-alias-deps -opaque -o bin/.main.eobjs/native/dune__exe__Main.cmx -c -impl bin/main.ml)
+$ (cd _build/default && /home/xypp3/.opam/default/bin/ocamlopt.opt -w @1..3@5..28@31..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -o bin/main.exe lib/day_01.cmxa bin/.main.eobjs/native/dune__exe__Main.cmx)
+$ (cd _build/default && /home/xypp3/.opam/default/bin/ocamlopt.opt -w @1..3@5..28@31..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -I bin/.main.eobjs/byte -I bin/.main.eobjs/native -I lib/.day_01.objs/byte -I lib/.day_01.objs/native -intf-suffix .ml -no-alias-deps -opaque -o bin/.main.eobjs/native/dune__exe__Main.cmx -c -impl bin/main.ml)
+> File "bin/main.ml", line 41, characters 4-24:
+> 41 | let read_file_to_strings filename =
+>          ^^^^^^^^^^^^^^^^^^^^
+> Error (warning 32 [unused-value-declaration]): unused value read_file_to_strings.
+[2]
+$ (cd _build/default && /home/xypp3/.opam/default/bin/ocamlopt.opt -w @1..3@5..28@31..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -I bin/.main.eobjs/byte -I bin/.main.eobjs/native -I lib/.day_01.objs/byte -I lib/.day_01.objs/native -intf-suffix .ml -no-alias-deps -opaque -o bin/.main.eobjs/native/dune__exe__Main.cmx -c -impl bin/main.ml)
+$ (cd _build/default && /home/xypp3/.opam/default/bin/ocamlopt.opt -w @1..3@5..28@31..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -o bin/main.exe lib/day_01.cmxa bin/.main.eobjs/native/dune__exe__Main.cmx)
+$ (cd _build/default && /home/xypp3/.opam/default/bin/ocamlopt.opt -w @1..3@5..28@31..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -I bin/.main.eobjs/byte -I bin/.main.eobjs/native -I lib/.day_01.objs/byte -I lib/.day_01.objs/native -intf-suffix .ml -no-alias-deps -opaque -o bin/.main.eobjs/native/dune__exe__Main.cmx -c -impl bin/main.ml)
+$ (cd _build/default && /home/xypp3/.opam/default/bin/ocamlopt.opt -w @1..3@5..28@31..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -o bin/main.exe lib/day_01.cmxa bin/.main.eobjs/native/dune__exe__Main.cmx)
+$ (cd _build/default && /home/xypp3/.opam/default/bin/ocamlopt.opt -w @1..3@5..28@31..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -I bin/.main.eobjs/byte -I bin/.main.eobjs/native -I lib/.day_01.objs/byte -I lib/.day_01.objs/native -intf-suffix .ml -no-alias-deps -opaque -o bin/.main.eobjs/native/dune__exe__Main.cmx -c -impl bin/main.ml)
+$ (cd _build/default && /home/xypp3/.opam/default/bin/ocamlopt.opt -w @1..3@5..28@31..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -o bin/main.exe lib/day_01.cmxa bin/.main.eobjs/native/dune__exe__Main.cmx)
+$ (cd _build/default && /home/xypp3/.opam/default/bin/ocamlopt.opt -w @1..3@5..28@31..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -I bin/.main.eobjs/byte -I bin/.main.eobjs/native -I lib/.day_01.objs/byte -I lib/.day_01.objs/native -intf-suffix .ml -no-alias-deps -opaque -o bin/.main.eobjs/native/dune__exe__Main.cmx -c -impl bin/main.ml)
+$ (cd _build/default && /home/xypp3/.opam/default/bin/ocamlopt.opt -w @1..3@5..28@31..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -o bin/main.exe lib/day_01.cmxa bin/.main.eobjs/native/dune__exe__Main.cmx)
+$ (cd _build/default && /home/xypp3/.opam/default/bin/ocamlopt.opt -w @1..3@5..28@31..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -I bin/.main.eobjs/byte -I bin/.main.eobjs/native -I lib/.day_01.objs/byte -I lib/.day_01.objs/native -intf-suffix .ml -no-alias-deps -opaque -o bin/.main.eobjs/native/dune__exe__Main.cmx -c -impl bin/main.ml)
+> File "bin/main.ml", line 45, characters 10-69:
+> 45 |   List.tl (List.fold_left (fun init x -> init ^ "\n" ^ x) "" strings)
+>                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> Error: This expression has type string but an expression was expected of type
+>          'a list
+[2]
+$ (cd _build/default && /home/xypp3/.opam/default/bin/ocamlopt.opt -w @1..3@5..28@31..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -I bin/.main.eobjs/byte -I bin/.main.eobjs/native -I lib/.day_01.objs/byte -I lib/.day_01.objs/native -intf-suffix .ml -no-alias-deps -opaque -o bin/.main.eobjs/native/dune__exe__Main.cmx -c -impl bin/main.ml)
+$ (cd _build/default && /home/xypp3/.opam/default/bin/ocamlopt.opt -w @1..3@5..28@31..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -o bin/main.exe lib/day_01.cmxa bin/.main.eobjs/native/dune__exe__Main.cmx)
+$ (cd _build/default && /home/xypp3/.opam/default/bin/ocamlopt.opt -w @1..3@5..28@31..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -I bin/.main.eobjs/byte -I bin/.main.eobjs/native -I lib/.day_01.objs/byte -I lib/.day_01.objs/native -intf-suffix .ml -no-alias-deps -opaque -o bin/.main.eobjs/native/dune__exe__Main.cmx -c -impl bin/main.ml)
+$ (cd _build/default && /home/xypp3/.opam/default/bin/ocamlopt.opt -w @1..3@5..28@31..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -o bin/main.exe lib/day_01.cmxa bin/.main.eobjs/native/dune__exe__Main.cmx)
+$ (cd _build/default && /home/xypp3/.opam/default/bin/ocamlopt.opt -w @1..3@5..28@31..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -I bin/.main.eobjs/byte -I bin/.main.eobjs/native -I lib/.day_01.objs/byte -I lib/.day_01.objs/native -intf-suffix .ml -no-alias-deps -opaque -o bin/.main.eobjs/native/dune__exe__Main.cmx -c -impl bin/main.ml)
+$ (cd _build/default && /home/xypp3/.opam/default/bin/ocamlopt.opt -w @1..3@5..28@31..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -o bin/main.exe lib/day_01.cmxa bin/.main.eobjs/native/dune__exe__Main.cmx)
