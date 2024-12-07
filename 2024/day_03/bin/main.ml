@@ -35,29 +35,47 @@ let () = printf "Sum big:%d\n" (mul_and_sum (get_mul_ops (read_file_to_strings "
 
 
 let testStr2 = {|xmul(2,4)&mul[3,7]!^don't()_mul(5,5)+mul(32,64](mul(11,8)undo()?mul(8,5))|}
-type enable =
+type enable = 
+        | DOe
+        | DONTe;;
+type op =
         | DO
         | DONT
+        | MUL
+        | FIN;;
+
 let get_mul_ops_part_2 s = 
         (* let s = Str.global_replace (Str.regexp "%%") "" s in *)
         let one_to_three_digits = {|\([0-9]\|[0-9][0-9]\|[0-9][0-9][0-9]\)|} in 
         let regexp = Str.regexp ("mul(" ^ one_to_three_digits ^ "," ^ one_to_three_digits ^ ")") in
         let re_do = Str.regexp "do()" in
         let re_dont = Str.regexp "don't()" in
-        let len = String.length s in
+
+        let search_mul i = try (Str.search_forward regexp s i) with Not_found -> 1000000 in
+        let search_do i = try (Str.search_forward re_do s i) with Not_found ->  1000000 in
+        let search_dont i = try (Str.search_forward re_dont s i) with Not_found -> 1000000 in
+        let search i = 
+        match search_do i, search_dont i, search_mul i with
+                | y,z,x when x <= y && x < z ->  (MUL, x)
+                | y,z,x when y <= x && y < z -> (DO, y)
+                | y,z,x when z <= y && z < x ->  (DONT, z)
+                | _,_, 1000000 -> (FIN, 0)
+                | _,_,_ -> (FIN, 0)
+        in
+
+
         let int_of match_g = Stdlib.int_of_string (Str.matched_group match_g s) in
         let rec findall i l e =
-        match (Str.string_match regexp s i), i, (Str.string_match re_do s i), (Str.string_match re_dont s i), e with
-        | true, _, _, _, DO -> findall (i+1) (l @ [(int_of 1) , (int_of 2)]) e
-        | true, _, _, _, DONT -> findall (i+1) l e
-        | _, x, true, _, _ when x < len  -> findall (i+1) l DO
-        | _, x, _, false, _ when x < len  -> findall (i+1) l DONT
-        | _, _, _, _, _ -> l
+        match search i, e with
+        | (MUL,j), DOe ->  findall (j+1) (l @ [(int_of 1) , (int_of 2)]) e
+        | (MUL,j), DONTe ->  findall (j+1) l e
+        | (DO, j), _ -> findall (j+1) l DOe
+        | (DONT, j), _ -> findall (j+1) l DONTe
+        | (FIN, _), _ -> l
         in
-        findall 0 [] DO;;
+        findall 0 [] DOe;;
 
-#trace get_mul_ops_part_2;;
 get_mul_ops_part_2 testStr2;;
 let () = printf "Sum test: %d\n" (mul_and_sum (get_mul_ops_part_2 testStr2))
+let () = printf "Sum test: %d\n" (mul_and_sum (get_mul_ops_part_2 testStr))
 let () = printf "Sum big part 2: %d\n" (mul_and_sum (get_mul_ops_part_2 (read_file_to_strings "big.txt")))
-
