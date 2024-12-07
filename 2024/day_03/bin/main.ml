@@ -51,15 +51,22 @@ let get_mul_ops_part_2 s =
         let re_do = Str.regexp "do()" in
         let re_dont = Str.regexp "don't()" in
 
-        let search_mul i = try (Str.search_forward regexp s i) with Not_found -> 1000000 in
-        let search_do i = try (Str.search_forward re_do s i) with Not_found ->  1000000 in
-        let search_dont i = try (Str.search_forward re_dont s i) with Not_found -> 1000000 in
+
+        let search_mul i = try Some (Str.search_forward regexp s i) with Not_found -> None in
+        let search_do i = try Some (Str.search_forward re_do s i) with Not_found -> None in
+        let search_dont i = try Some (Str.search_forward re_dont s i) with Not_found -> None in
+
+        let f a b = 
+        match b with
+                | Some x -> a <= x
+                | None -> true
+        in
         let search i = 
         match search_do i, search_dont i, search_mul i with
-                | y,z,x when x <= y && x < z ->  (MUL, x)
-                | y,z,x when y <= x && y < z -> (DO, y)
-                | y,z,x when z <= y && z < x ->  (DONT, z)
-                | _,_, 1000000 -> (FIN, 0)
+                | y,z,Some x when f x y && f x z ->  (MUL, x)
+                | Some y,z, x when f y x && f y z -> (DO, y)
+                | y, Some z, x when f z y && f z x ->  (DONT, z)
+                | _,_, None -> (FIN, 0)
                 | _,_,_ -> (FIN, 0)
         in
 
@@ -77,5 +84,4 @@ let get_mul_ops_part_2 s =
 
 get_mul_ops_part_2 testStr2;;
 let () = printf "Sum test: %d\n" (mul_and_sum (get_mul_ops_part_2 testStr2))
-let () = printf "Sum test: %d\n" (mul_and_sum (get_mul_ops_part_2 testStr))
 let () = printf "Sum big part 2: %d\n" (mul_and_sum (get_mul_ops_part_2 (read_file_to_strings "big.txt")))
