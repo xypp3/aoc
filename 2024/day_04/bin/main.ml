@@ -1,6 +1,4 @@
 open Printf
-let () = print_endline "Hello, World!";;
-
 let file_to_string filename =
         In_channel.(with_open_text filename input_all)
 
@@ -97,27 +95,41 @@ let count_xmas str =
 let () = Printf.printf "%d\n" (count_xmas small_1)
 let () = Printf.printf "%d\n" (count_xmas big)
 
-(* let mas_in_x grid start_c dir_c = *)
-(*         let magic_word = ['X';'M';'A';'S'] in *)
-(*         let len = grid_len grid in *)
-(*         let all_coords = List.mapi (fun i _ -> add_coord start_c (scale_coord dir_c (i))) magic_word in *)
-(*         (* let () = List.iter (fun (x,y) -> print_endline ((string_of_int y)^(string_of_int x))) all_coords in *) *)
-(**)
-(*         let filter_char coord chr =  *)
-(*                 (coord_in_grid coord len) && ((char_at_coord grid coord) = chr)  *)
-(*         in *)
-(**)
-(*         let rec check_magic_word coords word = *)
-(*                 match coords with *)
-(*                 | [] -> true *)
-(*                 | x :: xs -> match filter_char x (List.hd word) with *)
-(*                         | true -> check_magic_word xs (List.tl word) *)
-(*                         | false -> false *)
-(*         in *)
-(*         check_magic_word all_coords magic_word;; *)
-(**)
-(* let count_mas_x str = *)
-(*         let grid = make_grid str in *)
-(*         let all_x = (get_char_coords grid 'X') in *)
-(*         let results = List.flatten (List.map (fun x -> List.map (fun dir -> is_word_in_dir grid x dir) all_dirs) all_x) in *)
-(*         List.fold_left (fun acc a -> if a = true then acc + 1 else acc) 0 results;; *)
+let mas_in_x grid center_c =
+        let magic_word = ['M';'A';'S'] in
+        let len = grid_len grid in
+        let lt_to_rb = [
+                (add_coord center_c (1,-1));
+                center_c;
+                (add_coord center_c (-1,1));
+        ] in
+        let rt_to_lb = [
+                (add_coord center_c (1,1));
+                center_c;
+                (add_coord center_c (-1,-1));
+        ] in
+
+        let filter_char coord chr = 
+                (coord_in_grid coord len) && ((char_at_coord grid coord) = chr) 
+        in
+
+        let rec check_magic_word coords word =
+                match coords with
+                | [] -> true
+                | x :: xs -> match filter_char x (List.hd word) with
+                        | true -> check_magic_word xs (List.tl word)
+                        | false -> false
+        in
+        let is_lt_found = (check_magic_word lt_to_rb magic_word) || (check_magic_word lt_to_rb (List.rev magic_word)) in
+        let is_rt_found = (check_magic_word rt_to_lb magic_word) || (check_magic_word rt_to_lb (List.rev magic_word)) in
+        is_lt_found && is_rt_found
+
+
+let count_mas_x str =
+        let grid = make_grid str in
+        let all_x = (get_char_coords grid 'A') in
+        let results = (List.map (fun x -> mas_in_x grid x) all_x) in
+        List.fold_left (fun acc a -> if a = true then acc + 1 else acc) 0 results;;
+
+let () = printf "%d\n" (count_mas_x small_1)
+let () = printf "%d\n" (count_mas_x big)
