@@ -44,7 +44,7 @@ let check_update update rules =
         in
 
         let rec check u prev_bans = match u with  
-                | [] -> true 
+                | [] -> true
                 | x :: xs -> match follows_rules x prev_bans with
                         | Some _ -> false
                         | None -> check xs ((make_prev_bans x rules) @ prev_bans)
@@ -74,16 +74,38 @@ let make_types str =
                 | None -> raise Not_found
         in
         let rules = make_rules (List.filteri (fun i _ -> i < split_ind) lines) in
-        (* let updates = make_updates (List.filteri (fun i _ -> i > split_ind) lines) in *)
-        let _ = make_updates lines in
-        ([],rules)
+        let updates = make_updates (List.filteri (fun i s -> i > split_ind && s <> "") lines) in
+        (updates,rules)
 
 let () =
-        (* let updates, rules = make_types txt_small_1 in *)
-        (* List.iter (fun (pre,post) -> printf "%d->%d\n" pre post) rules; *)
-        (* List.iter (fun line -> List.iter (fun d -> printf "%d;" d) line; printf "\n") updates; *)
-        (* printf "update 1:%B\n" (check_update (List.nth updates 0) rules); *)
-        (* printf "findmiddle 1:%d\n" (find_middle (List.nth updates 0)); *)
-        (* printf "part1-small:%d\n" (count_correct updates rules); *)
+        let updates, rules = make_types txt_small_1 in
+        List.iter (fun (pre,post) -> printf "%d->%d\n" pre post) rules;
+        List.iter (fun line -> List.iter (fun d -> printf "%d;" d) line; printf "\n") updates;
+        printf "update 1:%B\n" (check_update (List.nth updates 0) rules);
+        printf "findmiddle 1:%d\n" (find_middle (List.nth updates 0));
+        printf "part1-small:%d\n" (count_correct updates rules);
         let updates, rules = make_types txt_big in
         printf "part1-big:%d\n" (count_correct updates rules)
+
+
+let fix_update update rules =
+        let points_to rules a b =
+                match List.find_opt (fun (pre,post) -> pre = a && post = b) rules with
+                | Some _ -> 1
+                | None -> 0
+        in 
+        List.sort (points_to rules) update
+
+let part_2 updates rules =
+        List.fold_left (fun acc u -> match check_update u rules with
+                | false -> acc + (find_middle (fix_update u rules))
+                | true -> acc
+        ) 0 updates
+
+
+let () =
+        let updates, rules = make_types txt_small_1 in
+        printf "part2-small:%d\n" (part_2 updates rules);
+        let updates, rules = make_types txt_big in
+        printf "part2-big:%d\n" (part_2 updates rules)
+
