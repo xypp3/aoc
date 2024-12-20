@@ -36,20 +36,20 @@ let txt_small_1 = {|47|53
 txt_small_1
 
 let check_update update rules =
-        (* let get_postcond num = match List.filter (fun (_,post) -> post = num ) rules with *)
-        (*         | [] -> -1 *)
-        (*         | (_,post) :: _ -> post *)
-        (* in *)
-        (* let rec check u prev = match u with *)
-        (* | [] -> true *)
-        (* | x :: _ ->  let post = get_postcond x in *)
-        (*         match List.find_opt (fun a -> post = a) prev with  *)
-        (*         | None -> false *)
-        (*         | Some _ -> check (List.tl u) (x :: prev) in *)
-        (* check update [] *)
-        update;
-        rules;
-        false;;
+        let follows_rules num prev_bans = 
+                List.find_map (fun (banned,a) -> if banned = num then Some (banned,a) else None) prev_bans
+        in
+        let make_prev_bans num rules =
+                List.filter (fun (_,b) -> num = b) rules
+        in
+
+        let rec check u prev_bans = match u with  
+                | [] -> true 
+                | x :: xs -> match follows_rules x prev_bans with
+                        | Some _ -> false
+                        | None -> check xs ((make_prev_bans x rules) @ prev_bans)
+        in
+        check update [];;
 
 let find_middle update =
         (List.nth update ((List.length update)/2))
@@ -74,15 +74,16 @@ let make_types str =
                 | None -> raise Not_found
         in
         let rules = make_rules (List.filteri (fun i _ -> i < split_ind) lines) in
-        let updates = make_updates (List.filteri (fun i _ -> i > split_ind) lines) in
-        (updates,rules)
+        (* let updates = make_updates (List.filteri (fun i _ -> i > split_ind) lines) in *)
+        let _ = make_updates lines in
+        ([],rules)
 
 let () =
-        let updates, rules = make_types txt_small_1 in
-        List.iter (fun (pre,post) -> printf "%d->%d\n" pre post) rules;
-        List.iter (fun line -> List.iter (fun d -> printf "%d;" d) line; printf "\n") updates;
-        printf "update 1:%B\n" (check_update (List.nth updates 0) rules);
-        printf "findmiddle 1:%d\n" (find_middle (List.nth updates 0));
-        printf "part1-small:%d\n" (count_correct updates rules);
-        (* let updates, rules = make_types txt_big in *)
-        (* printf "part1-small:%d\n" (count_correct updates rules) *)
+        (* let updates, rules = make_types txt_small_1 in *)
+        (* List.iter (fun (pre,post) -> printf "%d->%d\n" pre post) rules; *)
+        (* List.iter (fun line -> List.iter (fun d -> printf "%d;" d) line; printf "\n") updates; *)
+        (* printf "update 1:%B\n" (check_update (List.nth updates 0) rules); *)
+        (* printf "findmiddle 1:%d\n" (find_middle (List.nth updates 0)); *)
+        (* printf "part1-small:%d\n" (count_correct updates rules); *)
+        let updates, rules = make_types txt_big in
+        printf "part1-big:%d\n" (count_correct updates rules)
