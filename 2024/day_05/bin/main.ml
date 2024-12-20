@@ -87,7 +87,6 @@ let () =
         let updates, rules = make_types txt_big in
         printf "part1-big:%d\n" (count_correct updates rules)
 
-
 let fix_update update rules =
         let points_to rules a b =
                 match List.find_opt (fun (pre,post) -> pre = a && post = b) rules with
