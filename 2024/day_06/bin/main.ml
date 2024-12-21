@@ -39,6 +39,8 @@ let find_char grid char =
 
 let walk_to_end grid =
         let start = List.nth (find_char grid '^') 0 in
+        let tmpy, tmpx = start in
+        grid.(tmpy).(tmpx) <- 'X';
         let dir = (-1,0) in
         let max_x = max_x_grid grid in
         let max_y = max_y_grid grid in
@@ -57,7 +59,8 @@ let walk_to_end grid =
                 let y, x = (sy+dy),(sx+dx) in
 
                 if 0 <= y && y < (max_y) && 0 <= x && x < max_x then
-                        Some (y,x)
+                        try let _ = grid.(y).(x) in Some (y,x) with
+                        | Invalid_argument _ -> printf "invalid pos"; None
                 else
                         None
         in
@@ -87,6 +90,7 @@ let () =
         let grid = make_grid txt_big in
         Array.iteri (fun i l -> printf "-"; Array.iteri (fun j _ -> printf "%c" grid.(i).(j)) l; printf "\n") grid;
         walk_to_end grid;
-        Array.iteri (fun i l -> Array.iteri (fun j _ -> printf "--%c" grid.(i).(j)) l; printf "\n") grid;
+        Array.iteri (fun i l -> Array.iteri (fun j _ -> printf "%c" grid.(i).(j)) l; printf "\n") grid;
+        List.iter (fun (y,x) -> printf "%d,%d\n" y x) (find_char grid 'X');
         printf "Ans-big:%d\n" (List.length (find_char grid 'X'));
 
