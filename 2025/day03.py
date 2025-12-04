@@ -21,6 +21,7 @@ def part_2(banks):
         left_i = 0
         for i in range(11, -1, -1):
             s = b[left_i : len(b) - i]
+            # need to find max and index of slice, not of original b (bank)
             left = max(s)
             left_i += s.index(left) + 1
             n += left * (10 ** (i))
