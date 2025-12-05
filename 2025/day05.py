@@ -22,22 +22,19 @@ def part_1(input):
     fresh, ingred = input
     total = 0
 
-    def search_bin(target, l, r):
-        for _ in range(len(fresh)):
-            m = l + ((l + r) // 2)
+    def search_bin(target):
+        l, r = 0, len(fresh) - 1
+        while l <= r:
+            m = (l + r) // 2
+            s, e = fresh[m][0], fresh[m][1]
 
-            # print(l, r, m, target, fresh[l], fresh[r], fresh[m])
-            if target < fresh[m][0]:
-                r = m
-            elif target > fresh[m][1]:
-                l = m
-            else:
+            if s <= target <= e:
                 return True
-            # put this conditional last so that l/m range is also checked
-            if l == m:
-                if fresh[r][0] <= target <= fresh[r][1]:
-                    return True
-                return False
+            elif target < s:
+                r = m - 1
+            else:
+                l = m + 1
+        return False
 
     def search(target):
         for f in fresh:
@@ -46,8 +43,7 @@ def part_1(input):
         return False
 
     for i in ingred:
-        if search(i):
-            # print(i)
+        if search_bin(i):
             total += 1
 
     return total
