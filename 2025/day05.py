@@ -36,12 +36,6 @@ def part_1(input):
                 l = m + 1
         return False
 
-    def search(target):
-        for f in fresh:
-            if f[0] <= target <= f[1]:
-                return True
-        return False
-
     for i in ingred:
         if search_bin(i):
             total += 1
