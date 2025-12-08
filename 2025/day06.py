@@ -24,22 +24,46 @@ def part_1(input):
 
 
 def parse_2(txt):
-    rows = txt.strip().split("\n")
-    rows, ops = rows[: len(rows) - 1], re.split(r"\s+", rows[-1])
-    col_segments = list(
-        map(lambda s: [s[i : i + 3] for i in range(0, len(s), 4)], rows)
-    )
-    nums = []
-    for col in range(len(col_segments[0])):
-        tmp = []
-        for i in range(3):
-            s = ""
-            for row in range(3):
-                s += col_segments[row][col][i]
-            tmp.append(0 if s == "   " else int(s))
-        nums.append(tmp)
+    rows_str = txt.split("\n")
+    rows_str = rows_str[: len(rows_str) - 1]
+    rows_str, ops_str = rows_str[: len(rows_str) - 1], rows_str[-1]
 
-    return nums, ops
+    ops_list = []
+    num_lens = []
+    tmp = " "
+    for c in ops_str:
+        if c == "+" or c == "*":
+            num_lens.append(len(tmp) - 1)
+            ops_list.append(tmp[0])
+            tmp = c
+            continue
+        tmp += c
+    ops_list.append(tmp[0])
+    num_lens.append(len(tmp))
+    del ops_list[0]
+    del num_lens[0]
+
+    rows = []
+    for r in rows_str:
+        row = []
+        i = 0
+        for n in num_lens:
+            row.append(r[i : i + n])
+            i += n + 1  # NOTE: skip the space char with +1
+        rows.append(row)
+
+    cols = []
+    for c in range(len(rows[0])):
+        col = []
+        for i in range(num_lens[c]):
+            s = ""
+            for r in range(len(rows)):
+                s += rows[r][c][i]
+            # NOTE: test is " " * 3 and puzzle input is " " * 4
+            col.append(0 if " " * 3 == s or " " * 4 == s else int(s))
+        cols.append(col)
+
+    return cols, ops_list
 
 
 def part_2(input):
@@ -54,7 +78,8 @@ if __name__ == "__main__":
     test = """123 328  51 64 
  45 64  387 23 
   6 98  215 314
-*   +   *   +"""
+*   +   *   +  
+"""
     with open("./puzzle_input/day06.txt", "r") as f:
         file = f.read()
 
@@ -69,5 +94,6 @@ if __name__ == "__main__":
     print(tin2)
     t2 = part_2(tin2)
     print(t2)
-    p2 = part_2(parse_2(file))
+    puz2 = parse_2(file)
+    p2 = part_2(puz2)
     print(p2)
